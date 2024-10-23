@@ -83,9 +83,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -133,6 +141,11 @@
         .post-actions {
             margin-top: 10px;
         }
+        .scrollable-feed {
+            max-height: 400px; /* Ubah ini sesuai kebutuhan */
+            overflow-y: auto;
+            padding-right: 10px;
+        }
     </style>
 </head>
 
@@ -148,14 +161,15 @@
             <div class="col-md-4">
                 <!-- Weather Section -->
                 <div class="widget-container weather-container">
-                    <div class="weather-location">{{ $weatherData['location']['name'] }}</div>
+                    {{-- {{dd($weatherData)}} --}}
+                    {{-- <div class="weather-location">{{ $weatherData['location']['name'] }}</div>
                     <div class="weather-temp">{{ $weatherData['current']['temperature'] }}°C</div>
                     <img class="weather-icon" src="{{ $weatherData['current']['weather_icons'][0] }}" alt="Weather Icon">
                     <div class="weather-details">{{ $weatherData['current']['weather_descriptions'][0] }}</div>
                     <div class="weather-details">
                         Angin: {{ $weatherData['current']['wind_speed'] }} km/h | 
                         Kelembaban: {{ $weatherData['current']['humidity'] }}%
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Gempa Section -->
@@ -172,9 +186,10 @@
                     @endif
                 </div>
             </div>
-
+ 
             <!-- Right Column for Social Feed -->
             <div class="col-md-8">
+                <div class="scrollable-feed"> 
                 <h3 class="mb-4">Social Feed</h3>
                 
                 <!-- Form untuk Posting Status -->
@@ -183,20 +198,24 @@
                     <div class="mb-3">
                         <textarea class="form-control" name="message_text" rows="3" placeholder="What's on your mind?" required></textarea>
                     </div>
+
                     <div class="mb-3">
                         <input type="file" class="form-control" name="message_gambar">
                     </div>
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
 
-                <!-- Menampilkan Posting -->
+              <!-- Menampilkan Posting -->
                 @foreach($postings as $posting)
                     <div class="post mt-4">
+                        {{-- {{dd($posting)}} --}}
+                        <p>{{ $posting->sender->nama_user }}</p>
                         <p>{{ $posting->MESSAGE_TEXT }}</p>
                         @if($posting->MESSAGE_GAMBAR)
                             <img src="{{ asset('uploads/' . $posting->MESSAGE_GAMBAR) }}" alt="Post Image">
                         @endif
                         <div class="post-actions">
+                            {{-- {{dd($posting->POSTING_ID)}} --}}
                             <button class="btn btn-outline-primary btn-sm" onclick="likePost('{{ $posting->POSTING_ID }}')">Like</button>
                             <span>{{ $posting->likes->count() }} Likes</span>
                         </div>
@@ -209,20 +228,48 @@
                         </form>
                         <div class="mt-2">
                             @foreach($posting->comments as $comment)
-                                <div class="comment">
-                                    <strong>{{ $comment->USER_ID }}</strong>: {{ $comment->KOMENTAR_TEXT }}
+                                <div class="comment d-flex mb-2">
+                                    <div class="comment-body ms-3">
+                                        <div class="comment-header">
+                                            <strong>{{ $comment->user->nama_user }}</strong>
+                                            {{-- <span class="text-muted small">• {{ $comment->created_at->diffForHumans() }}</span> --}}
+                                        </div>
+                                        <p class="comment-text mb-0">{{ $comment->KOMENTAR_TEXT }}</p>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 @endforeach
+</div>
             </div>
         </div>
     </div>
 
     <script>
+       
         function likePost(postingId) {
-            // AJAX untuk like post
+            console.log(postingId);
+            
+            $.ajax({
+                url: '{{ route('posting.like', ':postingId') }}'.replace(':postingId', postingId),
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    if (response.status === 'liked') {
+                        alert('Post liked!');
+                    } else if (response.status === 'unliked') {
+                        alert('Like removed!');
+                    }
+                    location.reload(); // Refresh page to update like count
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Something went wrong!');
+                }
+                    });
         }
     </script>
 </body>

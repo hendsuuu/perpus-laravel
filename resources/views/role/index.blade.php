@@ -26,13 +26,13 @@
                     <td>{{ $role->id_jenis_user }}</td>
                     <td>{{ $role->jenis_user }}</td>
                     <td>
-                        <li>
-                            <form action="{{ route('role.destroy', $role->id_jenis_user) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus buku ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-danger">Hapus</button>
-                            </form>
-                        </li>
+                        
+                        <a href="{{ route('role.edit', $role->id_jenis_user) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('role.destroy', $role->id_jenis_user) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

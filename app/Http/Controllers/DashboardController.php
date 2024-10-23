@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Services\WeatherService;
 
 class DashboardController extends Controller
@@ -17,7 +18,9 @@ class DashboardController extends Controller
     {
         $country = 'Indonesia'; // Ganti ini dengan negara sesuai kebutuhan atau buat input dinamis
         $weatherData = $this->weatherService->getWeather($country);
+        $menus = Menu::with('menuLevel')->get();
 
-        return view('dashboard', compact('weatherData'));
+
+        return view('dashboard', compact('weatherData', 'weatherData', 'menus' ));
     }
 }

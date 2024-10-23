@@ -18,10 +18,15 @@ class Buku extends Model
         'judul',
         'pengarang',
         'id_kategori',
+        'id_user',
     ];
 
     public function kategori()
     {
         return $this->belongsTo(Kategori::class, 'id_kategori');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

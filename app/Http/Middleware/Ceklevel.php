@@ -18,27 +18,24 @@ class Ceklevel
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
+        // if (!Auth::check()) {
+        //     return redirect()->route('login');
+        // }
 
         $user = Auth::user();
 
-        // if (!$user->is_verified) {
-        //     return redirect()->route('verify.form');
-        // }
-
         foreach ($roles as $role) {
-            if ($user->role == $role) {
+            if ($user->id_jenis_user == $role) {
                 return $next($request);
             }
         }
 
-        switch ($user->role) {
+        // dd($user->id_jenis_user);
+        switch ($user->id_jenis_user) {
             case 1:
                 return redirect()->route('dashboard.index');
             case 2:
-                return redirect()->route('user.index');
+                return redirect()->route('dashboard.index');
             default:
                 return redirect()->route('unauthorized'); 
         }

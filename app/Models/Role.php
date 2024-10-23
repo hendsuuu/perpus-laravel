@@ -19,11 +19,15 @@ class Role extends Model
 
     public function roles()
     {
-        return $this->hasMany(Role::class, 'id_jenis_user');
+        return $this->hasMany(User::class, 'id_jenis_user');
     }
 
     public function menus()
     {
-        return $this->belongsToMany(Menu::class, 'role_menu');
+            return $this->belongsToMany(Menu::class, 'role_menu');
+    }
+    public function likes()
+    {
+        return $this->hasMany(PostingLike::class);
     }
 }

@@ -37,7 +37,7 @@
             width: 100%;
         }
 
-        input[type="text"], input[type="password"] {
+        input[type="text"],input[type="email"], input[type="password"] {
             width: 100%;
             padding: 12px 15px;
             margin: 10px 0;
@@ -49,7 +49,8 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        input[type="text"]:focus, input[type="password"]:focus {
+        
+        input[type="text"]:focus,input[type="email"]:focus, input[type="password"]:focus {
             border-color: #007bff;
             box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
             outline: none;
@@ -102,13 +103,95 @@
 
     <div class="container">
         <h1>Form Registrasi</h1>
-        <form action="/ProsesSimpan" method="POST">
+        <!-- Pesan sukses -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <!-- Formulir registrasi -->
+    <form action="{{ route('register.process') }}" method="POST">
+        @csrf
+
+        <!-- Nama User -->
+        <div class="form-group">
+            <label for="nama_user">Nama User</label>
+            <input type="text" name="nama_user" id="nama_user" class="form-control" value="{{ old('nama_user') }}" required>
+            @error('nama_user')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
+            @error('email')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" required>
+            @error('password')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- No HP -->
+        <div class="form-group">
+            <label for="no_hp">Nomor HP</label>
+            <input type="text" name="no_hp" id="no_hp" class="form-control" value="{{ old('no_hp') }}" required>
+            @error('no_hp')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Role -->
+        <div class="form-group">
+            <label for="id_jenis_user">Jenis User</label>
+            <select name="id_jenis_user" id="id_jenis_user" class="form-control" required>
+                <option value="" disabled selected>Pilih Jenis User</option>
+                @foreach($roles as $role)
+                    <option value="{{ $role->id_jenis_user }}" {{ old('id_jenis_user') == $role->id ? 'selected' : '' }}>
+                        {{ $role->jenis_user }}
+                    </option>
+                @endforeach
+            </select>
+            @error('id_jenis_user')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Status User -->
+        <div class="form-group">
+            <label for="status_user">Status User</label>
+            <input type="text" name="status_user" id="status_user" class="form-control" value="{{ old('status_user') }}" required>
+            @error('status_user')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Submit Button -->
+        <input type="submit" value="Daftar">
+    </form>
+        {{-- <form action="/ProsesSimpan" method="POST">
             @csrf
-            <input type="text" name="name" id="nama" placeholder="Masukkan Nama"><br>
+            <input type="text" name="nama_user" id="nama" placeholder="Masukkan Nama"><br>
             <input type="text" name="email" id="email" placeholder="Masukkan Email"><br>
             <input type="password" name="password" id="password" placeholder="Masukkan Password"><br>
+            <input type="text" name="no_hp" id="no_hp" placeholder="Masukkan No HP"><br>
+             <select name="id_jenis_user" id="id_jenis_user" class="form-control" required>
+                <option value="" disabled selected>Pilih Level</option> <!-- Opsi default -->
+                @foreach($roles as $role)
+                    <option value="{{ $role->id_jenis_user }}" {{ old('id_jenis_user') == $role->id_jenis_user ? 'selected' : '' }}>{{ $role->jenis_user }}</option>
+                @endforeach
+            </select>
             <input type="submit" value="Daftar">
-        </form>
+        </form> --}}
     </div> 
 
 

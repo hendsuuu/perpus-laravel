@@ -5,13 +5,13 @@
     <h1>Edit Buku</h1>
 
     <!-- Form untuk mengedit buku -->
-    <form action="{{ route('buku.edit', $buku->id) }}" method="POST">
+    <form action="{{ route('buku.update', $buku->kode) }}" method="POST">
         @csrf
         @method('PUT')
         
         <div class="mb-3">
-            <label for="kode" class="form-label">Kode Buku</label>
-            <input type="text" class="form-control @error('kode') is-invalid @enderror" id="kode" name="kode" value="{{ old('kode', $buku->kode) }}" required>
+            {{-- <label for="kode" class="form-label">Kode Buku</label> --}}
+            <input type="text" hidden class="form-control @error('kode') is-invalid @enderror" id="kode" name="kode" value="{{ old('kode', $buku->kode) }}" disabled required>
             @error('kode')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -38,7 +38,7 @@
             <select class="form-select @error('id_kategori') is-invalid @enderror" id="id_kategori" name="id_kategori" required>
                 <option value="" disabled>Select Kategori</option>
                 @foreach($kategoris as $kategori)
-                    <option value="{{ $kategori->id }}" {{ $kategori->id == old('id_kategori', $buku->id_kategori) ? 'selected' : '' }}>
+                    <option value="{{ $kategori->id_kategori }}" {{ $kategori->id_kategori == old('id_kategori', $buku->id_kategori) ? 'selected' : '' }}>
                         {{ $kategori->nama_kategori }}
                     </option>
                 @endforeach

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('password', 60);
             $table->string('email', 200);
             $table->string('no_hp', 30);
-            $table->string('status_user', 1)->nullable();
+            $table->string('status_user', 8)->nullable();
             $table->foreignId('id_jenis_user')->references('id_jenis_user')->on('jenis_user')->onDelete('cascade');
             $table->timestamps();
         });

@@ -25,4 +25,8 @@ class PostingKomentar extends Model
     {
         return $this->belongsTo(Posting::class, 'POSTING_ID', 'POSTING_ID');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'USER_ID');
+    }
 }

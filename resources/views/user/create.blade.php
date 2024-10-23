@@ -1,67 +1,3 @@
-{{-- @extends('layouts.app')
-
-@section('content')
-<div class="container mt-4">
-    <h1>Menambahkan User</h1>
-
-    <!-- Form untuk mengedit buku -->
-    <form action="{{ route('user.create', $user->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        
-        <div class="mb-3">
-            <label for="nama" class="form-label">Nama pengguna</label>
-            <input type="text" class="form-control @error('kode') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama', $user->nama) }}" required>
-            @error('nama')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="password" class="form-label">Password Pengguna</label>
-            <input type="text" class="form-control @error('password') is-invalid @enderror" id="password" name="password" value="{{ old('password', $user->password) }}" required>
-            @error('password')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $user->email) }}" required>
-            @error('email')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="nohp" class="form-label">Nomor Handphone</label>
-            <input type="text" class="form-control @error('nohp') is-invalid @enderror" id="nohp" name="nohp" value="{{ old('nohp', $user->nohp) }}" required>
-            @error('nohp')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="id_jenis_user" class="form-label">Level Pengguna</label>
-            <select class="form-select @error('id_kategori') is-invalid @enderror" id="id_jenis_user" name="id_jenis_user" required>
-                <option value="" disabled>Select Jenis User</option>
-                @foreach($roles as $role)
-                    <option value="{{ $role->id }}" {{ $role->id == old('id_jenis_user', $user->id_jenis_user) ? 'selected' : '' }}>
-                        {{ $role->jenis_user }}
-                    </option>
-                @endforeach
-            </select>
-            @error('id_jenis_user')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <button type="submit" class="btn btn-primary">Update User</button>
-        <a href="{{ route('user.index') }}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
-@endsection --}}
-
 @extends('layouts.app')
 
 @section('content')
@@ -124,21 +60,7 @@
         <button type="submit" class="btn btn-primary">Simpan</button>
         <a href="{{ route('user.index') }}" class="btn btn-secondary">Cancel</a>
 
-        {{-- <div class="mb-3">
-            <label for="id_jenis_user" class="form-label">Level Pengguna</label>
-            <select class="form-select @error('id_jenis_user') is-invalid @enderror" id="id_jenis_user" name="id_jenis_user" required>
-                <option value="" disabled selected>Select Jenis User</option>
-                @foreach($roles as $role)
-                    <option value="{{ $role->id }}">{{ $role->jenis_user }}</option>
-                @endforeach
-            </select>
-            @error('id_jenis_user')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <button type="submit" class="btn btn-primary">Tambah User</button>
-        <a href="{{ route('user.index') }}" class="btn btn-secondary">Cancel</a> --}}
+       
     </form>
 </div>
 @endsection

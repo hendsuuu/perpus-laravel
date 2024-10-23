@@ -28,6 +28,13 @@
                     <td>
                         {{-- <a href="{{ route('kategori.show', $kategori->id_kategori) }}" class="btn btn-info btn-sm">Detail</a> --}}
                         <a href="{{ route('kategori.edit', $kategori->id_kategori) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('kategori.destroy', $kategori->id_kategori) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        Hapus
+                                    </button>
+                                </form>
                     </td>
                 </tr>
             @endforeach

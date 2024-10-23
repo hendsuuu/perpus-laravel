@@ -30,22 +30,19 @@
                     <td>{{ $buku->judul }}</td>
                     <td>{{ $buku->pengarang }}</td>
                     <td>{{ $buku->kategori->nama_kategori }}</td> 
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                Actions
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li>
-                                    <a href="{{ route('buku.edit', $buku->idbuku) }}" class="dropdown-item">Edit</a>
-                                </li>
-                                <li>
+                    <td>    
+                                
+                                    <a href="{{ route('buku.edit', $buku->idbuku) }}" class="btn btn-warning btn-sm">Edit</a>
+                                
+                                
                                     <form action="{{ route('buku.destroy', $buku->idbuku) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus buku ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="dropdown-item text-danger">Hapus</button>
-                                    </form>
-                                </li>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        Hapus
+                                    </button>
+                                </form>
+                                
                             </ul>
                         </div>
                     </td>

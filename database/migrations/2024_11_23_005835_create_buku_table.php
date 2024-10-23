@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('pengarang', 200);
             $table->unsignedBigInteger('id_kategori'); 
             $table->timestamps();
-
+            $table->foreignId('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->foreign('id_kategori')->references('id_kategori')->on('kategori')->onDelete('cascade');
         });
     }

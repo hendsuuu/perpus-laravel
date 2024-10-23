@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('USER_ID', 30);
             $table->text('KOMENTAR_TEXT')->nullable();
             $table->string('KOMENTAR_GAMBAR', 200)->nullable();
-            $table->string('CREATE_BY', 30);
+            $table->string('CREATE_BY', 30)->nullable();
             $table->timestamp('CREATE_DATE')->useCurrent();
             $table->char('DELETE_MARK', 1)->default('N');
             $table->string('UPDATE_BY', 30)->nullable();

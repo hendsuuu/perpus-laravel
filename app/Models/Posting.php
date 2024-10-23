@@ -31,4 +31,8 @@ class Posting extends Model
     {
         return $this->hasMany(PostingKomentar::class, 'POSTING_ID', 'POSTING_ID');
     }
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'SENDER', 'id_user');
+    }
 }

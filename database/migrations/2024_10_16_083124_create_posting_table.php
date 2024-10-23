@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('posting', function (Blueprint $table) {
             $table->string('POSTING_ID', 30)->primary();
-            $table->string('SENDER', 30);
+            $table->foreignId('SENDER')->references('id_user')->on('users')->onDelete('cascade');
             $table->text('MESSAGE_TEXT')->nullable();
             $table->string('MESSAGE_GAMBAR', 200)->nullable();
-            $table->string('CREATE_BY', 30);
+            $table->string('CREATE_BY', 30)->nullable();
             $table->timestamp('CREATE_DATE')->useCurrent();
             $table->char('DELETE_MARK', 1)->default('N');
             $table->string('UPDATE_BY', 30)->nullable();

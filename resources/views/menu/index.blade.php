@@ -17,23 +17,43 @@
             <tr>
                 <th>Id Menu</th>
                 <th>Nama Menu</th>
+                <th>Nama Link</th>
+                <th>Nama Icon</th>
+                <th>Level</th>
+                {{-- <th>Menu Level</th> --}}
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($menus as $menu)
+            @foreach($allmenus as $menu)
                 <tr>
+                    <td>{{ $menu->menu_id }}</td>
+                    <td>{{ $menu->menu_name }}</td>
+                    <td>{{ $menu->menu_link }}</td>
+                    <td>{{ $menu->menu_icon }}</td>
                     <td>{{ $menu->id_level }}</td>
-                    <td>{{ $menu->level }}</td>
+                    {{-- <td> --}}
+                        {{-- {{ dd($menu->menuLevel[0]->level) }} --}}
+                            {{-- @if($menu->menuLevel->isNotEmpty())
+                                {{ $menu->menuLevel ? $menu->menuLevel[0]->level : 'Level tidak tersedia' }}
+                            @else
+                                Level tidak tersedia
+                            @endif --}}
+                    {{-- </td> --}}
                     <td>
-                        <li>
-                            <form action="{{ route('menu.destroy', $menu->id_level) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus buku ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-danger">Hapus</button>
-                            </form>
-                        </li>
-                    </td>
+                           <div class="btn-group" role="group" aria-label="Actions">
+                                <a href="{{ route('menu.edit', $menu->menu_id) }}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <form action="{{ route('menu.destroy', $menu->menu_id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus menu ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
                 </tr>
             @endforeach
         </tbody>
